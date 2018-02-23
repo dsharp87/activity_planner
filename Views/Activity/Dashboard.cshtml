@@ -1,0 +1,81 @@
+<h1>Dojo Activity Center</h1>
+<h4>Welcome: @ViewBag.LoggedUser.FirstName</h4>
+<form asp-controller="Activity" asp-action="Logout" method="POST">
+    <input type="submit" value="Logout">
+</form>
+<hr>
+
+<table>
+    <tr>
+        <td>Activity</td>
+        <td>Date and Time</td>
+        <td>Duration</td>
+        <td>Event Coordinator</td>
+        <td>Number of Participants</td>
+        <td>Actions</td>
+    </tr>
+    @foreach (var activity in ViewBag.AllActivities) {
+    <tr>
+        <td><a href="/ShowActivity/@activity.ActivityID">@activity.Name</a></td>
+        <td>@activity.StartTime.ToString("MM/dd hh:mm tt")</td>
+        @if (@activity.Duration < 60) {
+            <td>@activity.Duration Minutes</td>
+        } else if (@activity.Duration > 59 && @activity.Duration < 1440) {
+            <td>@(activity.Duration/60) Hours</td>
+        } else {
+            <td>@(activity.Duration/1440) Days</td>
+        }
+        <td>@activity.Creator.FirstName</td>
+        <td>@activity.UsersAttending.Count</td>
+        @if (ViewBag.LoggedUser.UserID == activity.Creator.UserID) {
+        <td>
+            <form asp-controller="Activity" asp-action="DeleteActivity" method="POST">
+                <input type="hidden" value="@activity.ActivityID" name="ActivityID">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+        } else {
+            bool NotGoing = true;
+            @foreach (var useractivity in activity.UsersAttending) {
+                if (@useractivity.UserID == @ViewBag.LoggedUser.UserID) {
+                    NotGoing = false;
+                }
+            }
+            if (NotGoing) {
+                bool overlapflag = false;
+                @foreach ( var ua in ViewBag.LoggedUser.AttendingActivities) {
+                    DateTime JoinedActivityStart = ua.Activity.StartTime;
+                    DateTime JoinedActivityEnd = ua.Activity.StartTime + new TimeSpan(0, ua.Activity.Duration, 0);
+                    DateTime ThisActivityStart = activity.StartTime;
+                    DateTime ThisActivityEnd = activity.StartTime + new TimeSpan(0, activity.Duration, 0);
+                    if(JoinedActivityStart < ThisActivityEnd && ThisActivityStart < JoinedActivityEnd) {
+                        overlapflag = true;
+                    }
+                }
+                if (overlapflag != true) {
+                    <td>
+                            <form asp-controller="Activity" asp-action="JoinActivity" method="POST">
+                                <input type="hidden" value="@activity.ActivityID" name="ActivityID">
+                                <input type="submit" value="Join">
+                            </form>
+                    </td>
+                } else {
+                    <td>You Are Busy During This Time</td>
+                }
+            } else {
+                <td>
+                    <form asp-controller="Activity" asp-action="LeaveActivity" method="POST">
+                        <input type="hidden" value="@activity.ActivityID" name="ActivityID">
+                        <input type="submit" value="Leave">
+                    </form>
+                </td>
+            }
+        }
+    </tr>
+    }
+</table>
+
+<form asp-controller="Activity" asp-action="AddActivityForm" method="GET">
+    <input type="submit" value="Add New Activity!">
+</form>
+

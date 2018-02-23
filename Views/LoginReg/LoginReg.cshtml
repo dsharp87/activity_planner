@@ -1,0 +1,29 @@
+﻿@model belt1.Models.UserViewModel
+<div id = "registration">
+    <h1>Register here</h1>
+    <form asp-controller="LoginReg" asp-action="register" method="post">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName"/><br>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName"/><br>
+        <label asp-for="Email"></label>
+        <input asp-for="Email"/><br>
+        <label asp-for="Password"></label>
+        <input asp-for="Password"/><br>
+        <label asp-for="PasswordConfirmation"></label>
+        <input asp-for="PasswordConfirmation"/><br>
+        <input type="submit" value = "Register">
+    </form>
+
+    <div asp-validation-summary="All"></div>
+    <hr>
+</div>
+<div id = "login">
+    <h1>Login Here</h1>
+    <form action="attemptlogin" method="post">
+        <label>Email:</label><input type="text" name="email"><br>
+        <label>Password:</label><input type="text" name = "password"><br>
+        <input type="submit" value = "login">
+    </form>
+    <h3>@ViewBag.Error</h3>
+</div>

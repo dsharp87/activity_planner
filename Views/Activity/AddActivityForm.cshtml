@@ -1,0 +1,29 @@
+<h1>Dojo Activity Center</h1>
+<a asp-conroller="Activity" asp-action="ShowDashboard">Dashboard</a>
+<form asp-controller="Activity" asp-action="Logout" method="POST">
+    <input type="submit" value="Logout">
+</form>
+<hr>
+
+@model belt1.Models.ActivityViewModel
+    <h1>Create an Activity</h1>
+    <form asp-controller="Activity" asp-action="CreateActivity" method="post">
+        <label>Title: </label>
+        <input asp-for="Name"/>
+        <label>Start Time</label>
+        <input type="time" name="StartTime"/><br>
+        <label >Date: </label>
+        <input type="date" asp-for="StartDate"/>
+        <label>Duration:</label>
+        <input type="number" asp-for="Duration"/>
+        <select name="TimeDenomination">
+            <option value="Days">Days</option>
+            <option value="Hours">Hours</option>
+            <option value="Minutes">Minutes</option>
+        </select><br>
+        <label>Description:</label>
+        <textarea asp-for="Description"></textarea><br>
+        <input type="submit" value = "CreateActivity">
+    </form>
+
+    <div asp-validation-summary="All"></div>

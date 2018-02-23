@@ -1,0 +1,46 @@
+<h1>Dojo Activity Center</h1>
+<a asp-conroller="Activity" asp-action="ShowDashboard">Dashboard</a>
+<form asp-controller="Activity" asp-action="Logout" method="POST">
+    <input type="submit" value="Logout">
+</form>
+<hr>
+
+<h1>@ViewBag.Activity.Name</h1>
+@if (ViewBag.LoggedUser.UserID == @ViewBag.Activity.Creator.UserID) {
+    <form asp-controller="Activity" asp-action="DeleteActivity" method="POST">
+        <input type="hidden" value="@ViewBag.Activity.ActivityID" name="ActivityID">
+        <input type="submit" value="Delete">
+    </form>
+} else {
+    bool NotGoing = true;
+    @foreach (var useractivity in @ViewBag.Activity.UsersAttending) {
+        if (@useractivity.UserID == @ViewBag.LoggedUser.UserID) {
+            NotGoing = false;
+        }
+    }
+    if (NotGoing) {
+        <td>
+            <form asp-controller="Activity" asp-action="JoinActivity" method="POST">
+                <input type="hidden" value="@ViewBag.Activity.ActivityID" name="ActivityID">
+                <input type="submit" value="Join">
+            </form>
+        </td>
+    } else {
+        <td>
+            <form asp-controller="Activity" asp-action="LeaveActivity" method="POST">
+                <input type="hidden" value="@ViewBag.Activity.ActivityID" name="ActivityID">
+                <input type="submit" value="Leave">
+            </form>
+        </td>
+    }
+}
+
+<h3>Event Coordinator: @ViewBag.Activity.Creator.FirstName</h3>
+<h3>Description:</h3>
+<p>@ViewBag.Activity.Description</p>
+<h3>Participants:</h3>
+<ul>
+    @foreach(var user in @ViewBag.Activity.UsersAttending) {
+        <li>@user.User.FirstName</li>
+    }
+</ul>
