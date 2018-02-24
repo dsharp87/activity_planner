@@ -54,6 +54,7 @@ namespace belt1.Controllers
                 } else {
                     ActivityDuration += new TimeSpan(0, 1*NewActivityViewModel.Duration, 0);
                 }
+                
                 Activity NewActivity = new Activity() {
                     Name = NewActivityViewModel.Name,
                     Description = NewActivityViewModel.Description,
