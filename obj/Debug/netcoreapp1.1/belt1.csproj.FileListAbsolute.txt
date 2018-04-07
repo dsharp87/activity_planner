@@ -1,0 +1,8 @@
+C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\belt1\bin\Debug\netcoreapp1.1\belt1.deps.json
+C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\belt1\bin\Debug\netcoreapp1.1\belt1.runtimeconfig.json
+C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\belt1\bin\Debug\netcoreapp1.1\belt1.runtimeconfig.dev.json
+C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\belt1\bin\Debug\netcoreapp1.1\belt1.dll
+C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\belt1\bin\Debug\netcoreapp1.1\belt1.pdb
+C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\belt1\obj\Debug\netcoreapp1.1\belt1.AssemblyInfo.cs
+C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\belt1\obj\Debug\netcoreapp1.1\belt1.dll
+C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\belt1\obj\Debug\netcoreapp1.1\belt1.pdb

@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using activity_planner.Models;
+using belt1.Models;
 using MySQL.Data.EntityFrameworkCore;
 using MySQL.Data.EntityFrameworkCore.Extensions;
 
-namespace activity_planner
+namespace belt1
 {
     public class Startup
     {
@@ -32,7 +32,7 @@ namespace activity_planner
         {
             // Add framework services.
             services.AddSession();
-            services.AddDbContext<activity_plannerContext>(options => options.UseMySQL(Configuration["DBInfo:ConnectionString"]));
+            services.AddDbContext<Belt1Context>(options => options.UseMySQL(Configuration["DBInfo:ConnectionString"]));
             services.AddMvc();
         }
 

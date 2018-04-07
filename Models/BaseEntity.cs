@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace activity_planner.Models
+namespace belt1.Models
 {
     public abstract class BaseEntity {
         

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace activity_planner.Models
+namespace belt1.Models
 {
     public class Activity: BaseEntity
     {

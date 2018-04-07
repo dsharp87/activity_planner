@@ -4,17 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using activity_planner.Models;
+using belt1.Models;
 using Microsoft.AspNetCore.Http;
 
-namespace activity_planner.Controllers
+namespace belt1.Controllers
 {
     public class LoginRegController : Controller
     {
 
-        private activity_plannerContext _context;
+        private Belt1Context _context;
  
-        public LoginRegController(activity_plannerContext context)
+        public LoginRegController(Belt1Context context)
         {
             _context = context;
         }
