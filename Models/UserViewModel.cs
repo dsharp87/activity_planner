@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace belt1.Models
+namespace activity_planner.Models
 {
     public class UserViewModel: BaseEntity
     {

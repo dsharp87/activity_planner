@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/belt1.csproj"
+                "${workspaceFolder}/activity_planner.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
