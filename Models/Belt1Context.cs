@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
  
-namespace belt1.Models
+namespace activity_planner.Models
 {
-    public class Belt1Context : DbContext
+    public class activity_plannerContext : DbContext
     {
         // base() calls the parent class' constructor passing the "options" parameter along
-        public Belt1Context(DbContextOptions<Belt1Context> options) : base(options) { }
+        public activity_plannerContext(DbContextOptions<activity_plannerContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
 
