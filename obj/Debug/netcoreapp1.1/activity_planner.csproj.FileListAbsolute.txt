@@ -6,3 +6,5 @@ C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\activity_planner\bin\Debug\n
 C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\activity_planner\obj\Debug\netcoreapp1.1\activity_planner.AssemblyInfo.cs
 C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\activity_planner\obj\Debug\netcoreapp1.1\activity_planner.dll
 C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\activity_planner\obj\Debug\netcoreapp1.1\activity_planner.pdb
+C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\activity_planner\obj\Debug\netcoreapp1.1\activity_planner.csproj.CoreCompileInputs.cache
+C:\Users\Danny\Desktop\DojoAssignments\netCore\orms\activity_planner\obj\Debug\netcoreapp1.1\activity_planner.AssemblyInfoInputs.cache
