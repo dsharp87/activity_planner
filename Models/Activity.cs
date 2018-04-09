@@ -32,9 +32,12 @@ namespace activity_planner.Models
 
         public List<UserActivity> UsersAttending { get; set;}
 
+        public List<Review> Reviews { get; set;}
+
 
         public Activity() {
             UsersAttending = new List<UserActivity>();
+            Reviews = new List<Review>();
         }
 
     }

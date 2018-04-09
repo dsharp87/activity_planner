@@ -5,6 +5,7 @@
 </form>
 <hr>
 
+<h3>Upcoming Activities</h3>
 <table>
     <tr>
         <td>Activity</td>
@@ -14,7 +15,7 @@
         <td>Number of Participants</td>
         <td>Actions</td>
     </tr>
-    @foreach (var activity in ViewBag.AllActivities) {
+    @foreach (var activity in ViewBag.AllFutureActivities) {
     <tr>
         <td><a href="/ShowActivity/@activity.ActivityID">@activity.Name</a></td>
         <td>@activity.StartTime.ToString("MM/dd hh:mm tt")</td>
@@ -78,4 +79,47 @@
 <form asp-controller="Activity" asp-action="AddActivityForm" method="GET">
     <input type="submit" value="Add New Activity!">
 </form>
+<hr>
 
+<h3>Past Activities</h3>
+
+<table>
+    <tr>
+        <td>Activity</td>
+        <td>Date and Time</td>
+        <td>Duration</td>
+        <td>Event Coordinator</td>
+        <td>Number of Participants</td>
+        <td>Attended</td>
+        <td>Actions</td>
+    </tr>
+    @foreach (var activity in ViewBag.PastActivities) {
+        bool attendedflag = false;
+        <tr>
+            <td><a href="/ShowActivity/@activity.ActivityID">@activity.Name</a></td>
+            <td>@activity.StartTime.ToString("MM/dd hh:mm tt")</td>
+            @if (@activity.Duration < 60) {
+                <td>@activity.Duration Minutes</td>
+            } else if (@activity.Duration > 59 && @activity.Duration < 1440) {
+                <td>@(activity.Duration/60) Hours</td>
+            } else {
+                <td>@(activity.Duration/1440) Days</td>
+            }
+            <td>@activity.Creator.FirstName</td>
+            <td>@activity.UsersAttending.Count</td>
+            
+            @foreach (var useractivity in activity.UsersAttending) {
+                if (@useractivity.UserID == @ViewBag.LoggedUser.UserID) {
+                    attendedflag = true;
+                }
+                if (attendedflag == true) {
+                    <td>Yes</td>
+                    <td><a href="WriteReview/@activity.ActivityID">Add Review</a></td>
+                } else {
+                    <td>No</td>
+                    <td>View Reviews</td>
+                }
+            }
+        </tr>
+    }
+</table>

@@ -27,7 +27,8 @@ namespace activity_planner.Controllers
                 return RedirectToAction("LoginReg", "LoginReg");
             }
             ViewBag.LoggedUser = _context.Users.Include(user => user.AttendingActivities).ThenInclude(ua => ua.Activity).SingleOrDefault(user => (user.UserID == HttpContext.Session.GetInt32("logged_id")));
-            ViewBag.AllActivities = _context.Activities.Where(activity => activity.StartTime > DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).OrderByDescending(activity=> activity.CreatedAt).ToList();
+            ViewBag.AllFutureActivities = _context.Activities.Where(activity => activity.StartTime > DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).OrderByDescending(activity=> activity.CreatedAt).ToList();
+            ViewBag.PastActivities = _context.Activities.Where(activity => activity.StartTime < DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).OrderByDescending(activity=> activity.CreatedAt).ToList(); 
             return View("Dashboard");
         }
 
@@ -41,12 +42,14 @@ namespace activity_planner.Controllers
             return View("AddActivityForm");
         }
 
+
+        //NEED LOGIC TO NOT ALLOW YOU TO CREATE AN ACTIVITY IF THAT BOUNDS ONE YOU ALREADY HAVE GOING OR ARE PARTICIPATING IN??
         [HttpPost]
         [Route("CreateActivity")]
         public IActionResult CreateActivity(ActivityViewModel NewActivityViewModel, string TimeDenomination, TimeSpan StartTime) {
             if(ModelState.IsValid) {
                 int LoggedID = (int)HttpContext.Session.GetInt32("logged_id");
-                    TimeSpan ActivityDuration = new TimeSpan(0, 0, 0);
+                TimeSpan ActivityDuration = new TimeSpan(0, 0, 0);
                 if (TimeDenomination == "Days") {
                     ActivityDuration += new TimeSpan(24*NewActivityViewModel.Duration, 0, 0);
                 } else if (TimeDenomination == "Hours") {
@@ -65,6 +68,12 @@ namespace activity_planner.Controllers
                 _context.Activities.Add(NewActivity);
                 _context.SaveChanges();
                 Activity SavedActivity = _context.Activities.SingleOrDefault(activity => activity.Name == NewActivityViewModel.Name && activity.CreatorID == LoggedID);
+                UserActivity NewUserActivity = new UserActivity() {
+                UserID = (int)HttpContext.Session.GetInt32("logged_id"),
+                ActivityID = SavedActivity.ActivityID
+                };
+                _context.UserActivities.Add(NewUserActivity);
+                _context.SaveChanges();
                 return RedirectToAction("ShowActivity", new {ActivityID = SavedActivity.ActivityID});
             }
             return View("AddActivityForm");
@@ -109,6 +118,17 @@ namespace activity_planner.Controllers
             ViewBag.LoggedUser = _context.Users.Include(user => user.AttendingActivities).ThenInclude(ua => ua.Activity).SingleOrDefault(user => (user.UserID == HttpContext.Session.GetInt32("logged_id")));
             ViewBag.Activity = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).SingleOrDefault(activity => activity.ActivityID == ActivityID);
             return View("ShowActivity");
+        }
+
+        [HttpGet]
+        [Route("WriteReview/{ActivityID}")]
+        public IActionResult ReviewForm(int ActivityID) {
+            if (HttpContext.Session.GetInt32("logged_id") == null) {
+                return RedirectToAction("LoginReg", "LoginReg");
+            }
+            ViewBag.LoggedUser = _context.Users.Include(user => user.AttendingActivities).ThenInclude(ua => ua.Activity).SingleOrDefault(user => (user.UserID == HttpContext.Session.GetInt32("logged_id")));
+            ViewBag.Activity = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).SingleOrDefault(activity => activity.ActivityID == ActivityID);
+            return View("ReviewForm");
         }
 
 
