@@ -5,6 +5,8 @@
 </form>
 <hr>
 
+<!-- DISPLAY OF OVERLAPPING EVENTS HERE -->
+
 <h1>@ViewBag.Activity.Name</h1>
 @if (ViewBag.LoggedUser.UserID == @ViewBag.Activity.Creator.UserID) {
     <form asp-controller="Activity" asp-action="DeleteActivity" method="POST">

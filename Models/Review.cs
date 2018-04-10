@@ -20,6 +20,10 @@ namespace activity_planner.Models
 
         public string Description { get;  set; }
 
+        public int ActivityID { get; set; }
+
+        public Activity Activity { get; set; }
+
         public int ReviewerID { get; set; }
 
         public User Reviewer { get; set; }

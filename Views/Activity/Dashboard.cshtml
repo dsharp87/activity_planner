@@ -91,6 +91,7 @@
         <td>Event Coordinator</td>
         <td>Number of Participants</td>
         <td>Attended</td>
+        <td>Reviews</td>
         <td>Actions</td>
     </tr>
     @foreach (var activity in ViewBag.PastActivities) {
@@ -112,13 +113,15 @@
                 if (@useractivity.UserID == @ViewBag.LoggedUser.UserID) {
                     attendedflag = true;
                 }
-                if (attendedflag == true) {
-                    <td>Yes</td>
-                    <td><a href="WriteReview/@activity.ActivityID">Add Review</a></td>
-                } else {
-                    <td>No</td>
-                    <td>View Reviews</td>
-                }
+            }
+            @if (attendedflag == true) {
+                <td>Yes</td>
+                <td>@activity.Reviews.Count</td>
+                <td><a href="ReviewForm/@activity.ActivityID">Add Review</a> | <a href="ShowReviews/@activity.ActivityID">View Reviews</a></td>
+            } else {
+                <td>No</td>
+                <td>@activity.Reviews.Count</td>
+                <td><a href="ShowReviews/@activity.ActivityID">View Reviews</a></td>
             }
         </tr>
     }

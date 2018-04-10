@@ -13,5 +13,7 @@ namespace activity_planner.Models
 
         public DbSet<UserActivity> UserActivities { get; set; }
 
+        public DbSet<Review> Reviews {get; set;}
+
     }
 }
