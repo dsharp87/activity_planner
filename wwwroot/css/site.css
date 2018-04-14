@@ -8,6 +8,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    background-color: #f7f9ff;
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
@@ -35,3 +36,82 @@ textarea {
         display: none;
     }
 }
+
+/* *******LOGIN REG START ******** */
+.top-bar {
+    height: 110px;
+    width: 1110px;
+    text-align: center;
+    background-color: #f7f9ff;
+}
+
+.top-bar h1 {
+    text-decoration: underline;
+}
+
+.body {
+    border: solid lightgrey 3px;
+    background-color: #f7f9ff;
+}
+
+.body h2 {
+    margin-top: 10px;
+}
+
+.form-container-left {
+    border-right: solid lightgrey 3px;
+}
+
+/* *******LOGIN REG END ******** */
+
+/* *******DASHBOARD START ******** */
+
+.top-bar-dashboard {
+    background-color: #f7f9ff;
+}
+
+.top-bar-dashboard h1 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.top-bar-dashboard h4 {
+    display: inline-block;
+}
+
+.top-bar-dashboard .logout-button {
+    display: inline-block;
+    position: relative;
+    left: 65%;
+     
+}
+
+.dashboard-header {
+    text-decoration: underline;
+    display: block;
+}
+
+#add-acitivty-btn {
+    display: block;
+}
+
+thead {
+    font-weight: bold;
+}
+
+/* *******DASHBOARD END ******** */
+
+/* *******ADD ACTIVITY FORM START ******** */
+
+form #inline-input {
+    display: inline-block;
+}
+
+form #denomination-dropdown {
+    width: 100px;
+}
+
+/* *******ADD ACTIVITY FORM END ******** */
+
+
+

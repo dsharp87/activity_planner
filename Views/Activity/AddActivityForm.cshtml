@@ -1,30 +1,43 @@
-<h1>Dojo Activity Center</h1>
-<a asp-conroller="Activity" asp-action="ShowDashboard">Dashboard</a>
-<form asp-controller="Activity" asp-action="Logout" method="POST">
-    <input type="submit" value="Logout">
-</form>
-<hr>
+<link rel="stylesheet" href="~/css/site.css" />
 
-@model activity_planner.Models.ActivityViewModel
-    <h1>Create an Activity</h1>
-    <form asp-controller="Activity" asp-action="CreateActivity" method="post">
-        <label>Title: </label>
-        <input asp-for="Name"/>
-        <label>Start Time</label>
-        <input type="time" name="StartTime"/><br>
-        <label >Date: </label>
-        <input type="date" asp-for="StartDate"/>
-        <label>Duration:</label>
-        <input type="number" asp-for="Duration"/>
-        <select name="TimeDenomination">
-            <option value="Days">Days</option>
-            <option value="Hours">Hours</option>
-            <option value="Minutes">Minutes</option>
-        </select><br>
-        <label>Description:</label>
-        <textarea asp-for="Description"></textarea><br>
-        <input type="submit" value = "CreateActivity">
-    </form>
+<div class="container">
+    <div class="row">
+        <div class="activity-top-bar">
+            <form asp-controller="Activity" asp-action="Logout" method="POST">
+                    <input type="submit" value="Logout">
+            </form>
+            <h1>Dojo Activity Center</h1>
+            <a asp-conroller="Activity" asp-action="ShowDashboard">Dashboard</a>
 
-    <h3>@ViewBag.OverlapError</h3>
-    <div asp-validation-summary="All"></div>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <h1>Create an Activity</h1>
+    </div>
+    <div class="row">
+        @model activity_planner.Models.ActivityViewModel
+        <form asp-controller="Activity" asp-action="CreateActivity" method="post">
+                <label>Title: </label>
+                <input asp-for="Name" class="form-control"/><br>
+                <label >Date: </label>
+                <input type="date" asp-for="StartDate" class="form-control"/><br>
+                <label>Start Time</label>
+                <input type="time" name="StartTime" class="form-control"/><br>
+                <label>Duration:</label><br>
+                <input type="number" asp-for="Duration" class="form-control" id="inline-input"/>
+                <select name="TimeDenomination" class="form-control" id="inline-input denomination-dropdown">
+                    <option value="Days">Days</option>
+                    <option value="Hours">Hours</option>
+                    <option value="Minutes">Minutes</option>
+                </select><br>
+                <label>Description:</label>
+                <textarea asp-for="Description" class="form-control"></textarea><br>
+                <input type="submit" value = "CreateActivity" class="btn btn-success">
+            
+        </form>
+
+        <h3>@ViewBag.OverlapError</h3>
+        <div asp-validation-summary="All"></div>
+    </div>
+</div>

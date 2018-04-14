@@ -41,8 +41,12 @@ namespace activity_planner.Models
         public override bool IsValid(object value)
         {
             string password = (string)value;
-            if(password.Any(char.IsUpper) && password.Any(char.IsNumber)) {
-                return true;
+            if (password != null) {
+                if(password.Any(char.IsUpper) && password.Any(char.IsNumber)) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }

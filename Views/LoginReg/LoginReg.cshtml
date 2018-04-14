@@ -1,29 +1,47 @@
 ﻿@model activity_planner.Models.UserViewModel
-<div id = "registration">
-    <h1>Register here</h1>
-    <form asp-controller="LoginReg" asp-action="Register" method="post">
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName"/><br>
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName"/><br>
-        <label asp-for="Email"></label>
-        <input asp-for="Email"/><br>
-        <label asp-for="Password"></label>
-        <input asp-for="Password"/><br>
-        <label asp-for="PasswordConfirmation"></label>
-        <input asp-for="PasswordConfirmation"/><br>
-        <input type="submit" value = "Register">
-    </form>
+<link rel="stylesheet" href="~/css/site.css" />
 
-    <div asp-validation-summary="All"></div>
-    <hr>
-</div>
-<div id = "login">
-    <h1>Login Here</h1>
-    <form action="attemptlogin" method="post">
-        <label>Email:</label><input type="text" name="email"><br>
-        <label>Password:</label><input type="text" name = "password"><br>
-        <input type="submit" value = "login">
-    </form>
-    <h3>@ViewBag.Error</h3>
+<div class="container">
+    <div class="row">
+        <div class="top-bar">
+            <h1>Activity Planner</h1>
+            <h4>Create view join and review activities and events near you!</h4>
+        </div>
+    </div>
+    <div class="row body">
+        <div class="col-sm-6 form-container-left">
+            <div class"form-cointainer">
+                <h2>Register</h2>
+                <form asp-controller="LoginReg" asp-action="Register" method="post">
+                    <div class="form-group">
+                        <label asp-for="FirstName"></label>
+                        <input asp-for="FirstName" class="form-control"/>
+                        <label asp-for="LastName"></label>
+                        <input asp-for="LastName" class="form-control"/>
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control"/>
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control"/>
+                        <label asp-for="PasswordConfirmation"></label>
+                        <input asp-for="PasswordConfirmation" class="form-control"/><br>
+                        <input type="submit" value = "Register" class="btn"/>
+                    </div>
+                </form>
+                <div asp-validation-summary="All"></div>
+            </div>
+        </div>
+        <div class="col-sm-6 form-container-right">
+            <h2>Login</h2>
+            <form action="attemptlogin" method="post">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="text" name="email" class="form-control"/>
+                    <label>Password:</label>
+                    <input type="text" name = "password" class="form-control"/><br>
+                    <input type="submit" value="Login" class="btn"/>
+                </div>
+            </form>
+            <h3>@ViewBag.Error</h3>
+        </div>
+    </div>
 </div>
