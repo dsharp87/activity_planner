@@ -141,3 +141,20 @@ form #denomination-dropdown {
 }
 
 /* *******REVIEW FORM END ******** */
+
+/* *******VIEW REVIEWS START ******** */
+
+#reviews-header {
+    display: inline-block;
+}
+
+#add-review-button {
+    display: inline-block;
+    margin-left: 30%;
+}
+
+.review-title {
+    text-decoration: underline;
+}
+
+/* *******VIEW REVIEWS END ******** */
