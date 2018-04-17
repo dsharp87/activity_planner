@@ -1,39 +1,50 @@
-<a href = "/Dashboard">Dashboard</a>
+<link rel="stylesheet" href="~/css/site.css" />
 
-<form asp-controller="Activity" asp-action="Logout" method="POST">
-    <input type="submit" value="Logout">
-</form>
-
-<h1>Activity: @ViewBag.Activity.Name</h1>
-<h3>Event Coordinator: @ViewBag.Activity.Creator.FirstName</h3>
-<h3>Description:</h3>
-<p>@ViewBag.Activity.Description</p>
-<h3>Participants:</h3>
-<ul>
-    @foreach(var user in @ViewBag.Activity.UsersAttending) {
-        <li>@user.User.FirstName</li>
-    }
-</ul>
-<hr>
-
-<h3>Write a review!</h3>
-
-@model activity_planner.Models.ReviewViewModel
-<form asp-controller="Review" asp-action="AddReview" method="post">
-    <input type="hidden" name = "ActivityID" value = "@ViewBag.Activity.ActivityID">
-    <label asp-for="Title"></label>
-    <input asp-for="Title"/><br>
-    <label asp-for="Rating"></label>
-    <select asp-for="Rating">
-        <option value = "1">1</option>
-        <option value = "2">2</option>
-        <option value = "3">3</option>
-        <option value = "4">4</option>
-        <option value = "5">5</option>
-    </select><br>
-    <label asp-for="Description"></label>
-    <textarea asp-for="Description"></textarea><br>
-    <input type="submit" value = "Submit">
-</form>
-
-<div asp-validation-summary="All"></div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a href="/Dashboard" class="activity-nav-bar">Dashboard</a>
+            <p class="activity-nav-bar"> | </p>
+            <form asp-controller="Activity" asp-action="Logout" method="POST" class="activity-nav-bar">
+                    <input type="submit" value="Logout" class="btn btn-danger"\>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+                <h2 class="review-form-activity-title">@ViewBag.Activity.Name</h2>
+                <h4>Event Coordinator: @ViewBag.Activity.Creator.FirstName</h4>
+                <h4>Description:</h4>
+                <p>@ViewBag.Activity.Description</p>
+                <h4>Participants:</h4>
+                <ul>
+                    @foreach(var user in @ViewBag.Activity.UsersAttending) {
+                        <li>@user.User.FirstName</li>
+                    }
+                </ul>
+        </div>
+        <div class="col">
+            <h3>Write A Review</h3>
+            @model activity_planner.Models.ReviewViewModel
+            <form asp-controller="Review" asp-action="AddReview" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="ActivityID" value="@ViewBag.Activity.ActivityID">
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="form-control"/><br>
+                    <label asp-for="Rating"></label>
+                    <select asp-for="Rating" class="form-control">
+                        <option value = "1">1</option>
+                        <option value = "2">2</option>
+                        <option value = "3">3</option>
+                        <option value = "4">4</option>
+                        <option value = "5">5</option>
+                    </select><br>
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea><br>
+                    <input type="submit" value="Add Review" class="btn btn-success">
+                </div>
+            </form>
+            <div asp-validation-summary="All"></div>
+        </div>
+    </div>
+</div>

@@ -132,3 +132,12 @@ form #denomination-dropdown {
 
 
 /* *******SHOW ACTIVITY END ******** */
+
+/* *******REVIEW FORM START ******** */
+
+.review-form-activity-title {
+    text-align: center;
+    text-decoration: underline;
+}
+
+/* *******REVIEW FORM END ******** */

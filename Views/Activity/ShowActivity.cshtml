@@ -12,20 +12,35 @@
     </div>
     <div class="row">
         <div class="col">
-            <h1 class="add-form-header">Activity Viewer</h1>
+            <h1 class="add-form-header">@ViewBag.Activity.Name</h1>
         </div>
     </div>
     <hr>
-
     <!-- DISPLAY OF OVERLAPPING EVENTS HERE -->
     <div class="row">
         <div class="col">
-            <h1 class="show-page-inline">Title: @ViewBag.Activity.Name</h1> 
+            <h4>Event Coordinator: @ViewBag.Activity.Creator.FirstName @ViewBag.Activity.Creator.LastName</h4>
+            <h4>Description:</h4>
+            <p>@ViewBag.Activity.Description</p>
+            <h4>Currently Attending:</h4>
+            <ul>
+                @foreach(var user in @ViewBag.Activity.UsersAttending) {
+                    <li>@user.User.FirstName</li>
+                }
+            </ul>
+        </div>
+        <div class="col">
             @if (ViewBag.LoggedUser.UserID == @ViewBag.Activity.Creator.UserID) {
-                <form class="show-page-inline" asp-controller="Activity" asp-action="DeleteActivity" method="POST">
-                    <input type="hidden" value="@ViewBag.Activity.ActivityID" name="ActivityID">
-                    <input type="submit" value="Delete" class="btn btn-danger show-page-inline">
-                </form>
+                <div class="row">
+                    <div class="col">
+                        <h5> Your Attending Status: Creator/Attending</h5>
+                        <h5 class="show-page-inline">Actions: </h5>
+                        <form class="show-page-inline" asp-controller="Activity" asp-action="DeleteActivity" method="POST">
+                            <input type="hidden" value="@ViewBag.Activity.ActivityID" name="ActivityID">
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                    </div>
+                </div>
             } else {
                 bool NotGoing = true;
                 @foreach (var useractivity in @ViewBag.Activity.UsersAttending) {
@@ -34,30 +49,29 @@
                     }
                 }
                 if (NotGoing) {
-                    <td>
-                        <form class="show-page-inline" asp-controller="Activity" asp-action="JoinActivity" method="POST">
-                            <input type="hidden" value="@ViewBag.Activity.ActivityID" name="ActivityID">
-                            <input type="submit" value="Join" class="btn btn-success show-page-inline">
-                        </form>
-                    </td>
+                    <div class="row">
+                        <div class="col">
+                            <h5> Your Attending Status: Not Attending</h5>
+                            <h5 class="show-page-inline">Actions: </h5>
+                            <form class="show-page-inline" asp-controller="Activity" asp-action="JoinActivity" method="POST">
+                                    <input type="hidden" value="@ViewBag.Activity.ActivityID" name="ActivityID">
+                                    <input type="submit" value="Join" class="btn btn-success">
+                            </form>
+                        </div>
+                    </div>
                 } else {
-                    <td>
-                        <form class="show-page-inline" asp-controller="Activity" asp-action="LeaveActivity" method="POST">
-                            <input type="hidden" value="@ViewBag.Activity.ActivityID" name="ActivityID">
-                            <input type="submit" value="Leave" class="btn btn-warning show-page-inline">
-                        </form>
-                    </td>
+                    <div class="row">
+                        <div class="col">
+                            <h5> Your Attending Status: Attending</h5>
+                            <h5 class="show-page-inline">Actions: </h5>
+                            <form class="show-page-inline" asp-controller="Activity" asp-action="LeaveActivity" method="POST">
+                                    <input type="hidden" value="@ViewBag.Activity.ActivityID" name="ActivityID">
+                                    <input type="submit" value="Leave" class="btn btn-warning">
+                                </form>
+                        </div>
+                    </div>
                 }
             }
         </div>
-    </div>
-    <h3>Event Coordinator: @ViewBag.Activity.Creator.FirstName</h3>
-    <h3>Description:</h3>
-    <p>@ViewBag.Activity.Description</p>
-    <h3>Participants:</h3>
-    <ul>
-        @foreach(var user in @ViewBag.Activity.UsersAttending) {
-            <li>@user.User.FirstName</li>
-        }
-    </ul>
+    </div>  
 </div>
