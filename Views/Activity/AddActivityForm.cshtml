@@ -2,42 +2,66 @@
 
 <div class="container">
     <div class="row">
-        <div class="activity-top-bar">
-            <form asp-controller="Activity" asp-action="Logout" method="POST">
-                    <input type="submit" value="Logout">
+        <div class="col">
+            <a asp-conroller="Activity" asp-action="ShowDashboard" class="activity-nav-bar">Dashboard</a>
+            <p class="activity-nav-bar"> | </p>
+            <form asp-controller="Activity" asp-action="Logout" method="POST" class="activity-nav-bar">
+                    <input type="submit" value="Logout" class="btn btn-danger"\>
             </form>
-            <h1>Dojo Activity Center</h1>
-            <a asp-conroller="Activity" asp-action="ShowDashboard">Dashboard</a>
-
-            <hr>
         </div>
     </div>
     <div class="row">
-        <h1>Create an Activity</h1>
+        <div class="col">
+            <h1 class="add-form-header">Activity Planner</h1>
+            <p>Please fill out the fields below to add activity to our platform.  In order to help you avoid double booking yourself, we alert you if the activity you are adding overlaps with one you've already created.</p>
+        </div>
+    </div> 
+    <hr>
+    <div class="row">
+        <div class="col">
+            <h2>Create an Activity</h2>
+        </div>
     </div>
     <div class="row">
-        @model activity_planner.Models.ActivityViewModel
-        <form asp-controller="Activity" asp-action="CreateActivity" method="post">
+        <div class="col">
+            @model activity_planner.Models.ActivityViewModel
+            <form asp-controller="Activity" asp-action="CreateActivity" method="post">
                 <label>Title: </label>
                 <input asp-for="Name" class="form-control"/><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
                 <label >Date: </label>
                 <input type="date" asp-for="StartDate" class="form-control"/><br>
+        </div>
+        <div class="col-sm-4">
                 <label>Start Time</label>
                 <input type="time" name="StartTime" class="form-control"/><br>
+        </div>
+        <div class="col-sm-2">
                 <label>Duration:</label><br>
                 <input type="number" asp-for="Duration" class="form-control" id="inline-input"/>
+        </div>
+        <div class="col-sm-2">
+                <label>Time Denomination:</label>
                 <select name="TimeDenomination" class="form-control" id="inline-input denomination-dropdown">
                     <option value="Days">Days</option>
                     <option value="Hours">Hours</option>
                     <option value="Minutes">Minutes</option>
                 </select><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
                 <label>Description:</label>
-                <textarea asp-for="Description" class="form-control"></textarea><br>
+                <textarea asp-for="Description" class="form-control" style="min-width: 100%" rows="4"></textarea><br>
                 <input type="submit" value = "CreateActivity" class="btn btn-success">
-            
-        </form>
-
-        <h3>@ViewBag.OverlapError</h3>
-        <div asp-validation-summary="All"></div>
+        </div>
+    </div>
+            </form>
+            <h3>@ViewBag.OverlapError</h3>
+            <div asp-validation-summary="All"></div>
+        </div>
     </div>
 </div>
