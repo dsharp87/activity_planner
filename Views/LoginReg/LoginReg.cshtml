@@ -18,18 +18,26 @@
                     <div class="form-group">
                         <label asp-for="FirstName"></label>
                         <input asp-for="FirstName" class="form-control"/>
+                        <span asp-validation-for="FirstName" class="text-danger"></span><br>
                         <label asp-for="LastName"></label>
                         <input asp-for="LastName" class="form-control"/>
+                        <span asp-validation-for="LastName" class="text-danger"></span><br>
                         <label asp-for="Email"></label>
                         <input asp-for="Email" class="form-control"/>
+                        <p class="text-danger">@ViewBag.ExistsError</p>
+                        <span asp-validation-for="Email" class="text-danger"></span><br>
                         <label asp-for="Password"></label>
-                        <input asp-for="Password" class="form-control"/>
+                        <input asp-for="Password" class="form-control" type="password"/>
+                        <span asp-validation-for="Password" class="text-danger"></span><br>
                         <label asp-for="PasswordConfirmation"></label>
-                        <input asp-for="PasswordConfirmation" class="form-control"/><br>
+                        <input asp-for="PasswordConfirmation" class="form-control" type="password"/>
+                        <span asp-validation-for="PasswordConfirmation" class="text-danger"></span><br>
+                        <br>
                         <input type="submit" value = "Register" class="btn"/>
                     </div>
                 </form>
-                <div asp-validation-summary="All"></div>
+                
+                <!-- <div asp-validation-summary="All"></div> -->
             </div>
         </div>
         <div class="col-sm-6 form-container-right">
@@ -39,7 +47,7 @@
                     <label>Email:</label>
                     <input type="text" name="email" class="form-control"/>
                     <label>Password:</label>
-                    <input type="text" name = "password" class="form-control"/><br>
+                    <input type="password" name = "password" class="form-control"/><br>
                     <input type="submit" value="Login" class="btn"/>
                 </div>
             </form>

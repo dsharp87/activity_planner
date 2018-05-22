@@ -43,7 +43,7 @@ namespace activity_planner.Controllers
                 };
                 _context.Reviews.Add(reviewToAdd);
                 _context.SaveChanges();
-                return RedirectToAction("ShowActivity", "Activity", new {ActivityID = ActivityID});
+                return RedirectToAction("ShowReviews", "Review", new {ActivityID = ActivityID});
             }
             ViewBag.Activity = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).SingleOrDefault(activity => activity.ActivityID == ActivityID);
             return View("ReviewForm");

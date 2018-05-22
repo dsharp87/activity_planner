@@ -38,7 +38,6 @@ Want to Try it Yourself?
 
 
 Features I'd like to add
-- complete password hashing and salting (can't store real passowrds thats scary)
 - When registered activity overlaps with existing joined activities, displaying a warning that allows users to manage that conflic
 - Allow users to upvote reviews, so that most relevant or most liked reviews filter to top of list
 
