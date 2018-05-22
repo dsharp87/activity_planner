@@ -27,8 +27,8 @@ namespace activity_planner.Controllers
                 return RedirectToAction("LoginReg", "LoginReg");
             }
             ViewBag.LoggedUser = _context.Users.Include(user => user.AttendingActivities).ThenInclude(ua => ua.Activity).SingleOrDefault(user => (user.UserID == HttpContext.Session.GetInt32("logged_id")));
-            ViewBag.AllFutureActivities = _context.Activities.Where(activity => activity.StartTime > DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).OrderByDescending(activity=> activity.CreatedAt).ToList();
-            ViewBag.PastActivities = _context.Activities.Where(activity => activity.StartTime < DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).Include(activity => activity.Reviews).OrderByDescending(activity=> activity.CreatedAt).ToList(); 
+            ViewBag.AllFutureActivities = _context.Activities.Where(activity => activity.StartTime > DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).OrderBy(activity=> activity.StartTime).ToList();
+            ViewBag.PastActivities = _context.Activities.Where(activity => activity.StartTime < DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).Include(activity => activity.Reviews).OrderByDescending(activity=> activity.StartTime).ToList(); 
             return View("Dashboard");
         }
 

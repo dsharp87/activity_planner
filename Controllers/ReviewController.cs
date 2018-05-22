@@ -55,6 +55,7 @@ namespace activity_planner.Controllers
             if (HttpContext.Session.GetInt32("logged_id") == null) {
                 return RedirectToAction("LoginReg", "LoginReg");
             }
+            ViewBag.LoggedUserID = (int)HttpContext.Session.GetInt32("logged_id");
             ViewBag.Activity = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).Include(activity => activity.Reviews).ThenInclude(review => review.Reviewer).SingleOrDefault(activity => activity.ActivityID == ActivityID);
             return View("ShowReviews");
         }

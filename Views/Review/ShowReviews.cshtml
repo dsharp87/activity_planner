@@ -36,10 +36,20 @@
     <div class="row">
         <div class="col">
             <h3 id="reviews-header">Reviews</h3>
-            <form id="add-review-button" asp-controller="Review" asp-action="ReviewForm" method="GET">
-                <input type="hidden" name="ActivityID" value="@ViewBag.Activity.ActivityID">
-                <input type="submit" value="Add Review" class="btn btn-success">
-            </form>
+            @{
+                bool attendedflag = false;
+                @foreach (var useractivity in @ViewBag.Activity.UsersAttending) {
+                    if (@useractivity.UserID == @ViewBag.LoggedUserID) {
+                        attendedflag = true;
+                    }
+                }
+                @if (attendedflag == true) {
+                    <form id="add-review-button" asp-controller="Review" asp-action="ReviewForm" method="GET">
+                        <input type="hidden" name="ActivityID" value="@ViewBag.Activity.ActivityID">
+                        <input type="submit" value="Add Review" class="btn btn-success">
+                    </form>
+                }
+            }
         </div>
     </div>
 
