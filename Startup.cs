@@ -1,66 +1,64 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using activity_planner.Models;
-using MySQL.Data.EntityFrameworkCore;
-using MySQL.Data.EntityFrameworkCore.Extensions;
+
 
 namespace activity_planner
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
             // Add framework services.
             services.AddSession();
-            services.AddDbContext<activity_plannerContext>(options => options.UseMySQL(Configuration["DBInfo:ConnectionString"]));
-            services.AddMvc();
+            services.AddDbContext<activity_plannerContext>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+                app.UseHsts();
             }
             else
             {
-                app.UseExceptionHandler("/LoginReg/Error");
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+                //app.UseRewriter(new RewriteOptions().AddRedirectToHttps(StatusCodes.Status301MovedPermanently, 443));
             }
-
+            app.UseHsts();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
             app.UseSession();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=LoginReg}/{action=LoginReg}/{id?}");
-            });
+            app.UseMvc();
         }
     }
 }

@@ -30,7 +30,12 @@ namespace activity_planner.Models
     {
         public override bool IsValid(object value)
         {
-            return value != null && (DateTime)value > DateTime.Now;
+            bool valid = false;
+            if (value != null && (DateTime)value > DateTime.Now) {
+                valid = true;
+            }
+            return valid; 
+            // return value != null && (DateTime)value > DateTime.Now;
         }
     }  
 }
