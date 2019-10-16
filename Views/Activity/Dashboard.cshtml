@@ -17,19 +17,17 @@
             <hr>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-4">
+    <div class="row upcoming-top-bar">
+        <div class="col">    
             <h3 class="dashboard-header">Upcoming Activities</h3>
-        </div>
-        <div class="col-sm-8">
-            <form asp-controller="Activity" asp-action="AddActivityForm" method="GET">
-                    <input type="submit" class="btn btn-success" id="add-activity-btn" value="Add New Activity!">
+            <form asp-controller="Activity" asp-action="AddActivityForm" method="GET" class="add-activity-btn">
+                    <input type="submit" class="btn btn-success" value="Add New Activity!">
             </form>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <table class="table table-hover table-striped table-bordered">
+            <table class="table table-hover table-striped table-bordered table-responsive-sm">
                 <thead class="thead-light">
                     <tr>
                         <td>Activity</td>
@@ -112,7 +110,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <table class="table table-hover table-striped table-bordered">
+            <table class="table table-hover table-striped table-bordered table-responsive-md">
                 <thead class="thead-light">
                     <tr>
                         <td>Activity</td>

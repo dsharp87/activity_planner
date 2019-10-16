@@ -3,11 +3,13 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <a asp-conroller="Activity" asp-action="ShowDashboard" class="activity-nav-bar">Dashboard</a>
-            <p class="activity-nav-bar"> | </p>
-            <form asp-controller="Activity" asp-action="Logout" method="POST" class="activity-nav-bar">
-                    <input type="submit" value="Logout" class="btn btn-danger"\>
-            </form>
+            <div class="nav-buttons-container">
+                <a asp-conroller="Activity" asp-action="ShowDashboard" class="activity-nav-bar">Dashboard</a>
+                <p class="activity-nav-bar"> | </p>
+                <form asp-controller="Activity" asp-action="Logout" method="POST" class="activity-nav-bar">
+                        <input type="submit" value="Logout" class="btn btn-danger"\>
+                </form>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -30,7 +32,7 @@
                 <input asp-for="Name" class="form-control"/><br>
         </div>
     </div>
-    <div class="row">
+    <div class="row time-row">
         <div class="col-sm-4">
                 <label >Date: </label>
                 <input type="date" asp-for="StartDate" class="form-control"/><br>
@@ -41,11 +43,11 @@
         </div>
         <div class="col-sm-2">
                 <label>Duration:</label><br>
-                <input type="number" asp-for="Duration" class="form-control" id="inline-input"/>
+                <input type="number" asp-for="Duration" class="form-control inline-input"/>
         </div>
         <div class="col-sm-2">
-                <label>Time Denomination:</label>
-                <select name="TimeDenomination" class="form-control" id="inline-input denomination-dropdown">
+                <label>Denomination:</label>
+                <select name="TimeDenomination" class="form-control inline-input" id="denomination-dropdown">
                     <option value="Days">Days</option>
                     <option value="Hours">Hours</option>
                     <option value="Minutes">Minutes</option>

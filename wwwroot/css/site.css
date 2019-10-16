@@ -40,7 +40,8 @@ textarea {
 /* *******LOGIN REG START ******** */
 .top-bar {
     height: 110px;
-    width: 1110px;
+    width: 100%;
+    margin-bottom: 10px;
     text-align: center;
     background-color: #f7f9ff;
 }
@@ -77,22 +78,26 @@ textarea {
 
 .top-bar-dashboard h4 {
     display: inline-block;
+    width: 70%;
 }
 
 .top-bar-dashboard .logout-button {
     display: inline-block;
-    position: relative;
-    left: 65%;
+    position: absolute;
+    right: 10px;
      
 }
 
-.dashboard-header {
+.upcoming-top-bar h3 {
     text-decoration: underline;
-    display: block;
+    display: inline-block;
+    width: 70%;
 }
 
-#add-acitivty-btn {
-    display: block;
+.upcoming-top-bar .add-activity-btn {
+    display: inline-block;
+    position: absolute;
+    right: 20px;
 }
 
 thead {
@@ -103,10 +108,13 @@ thead {
 
 /* *******ADD ACTIVITY FORM START ******** */
 
+.nav-buttons-container {
+    text-align: right;
+    margin-top: 10px;
+}
+
 .activity-nav-bar {
     display: inline-block;
-    position: relative;
-    left: 85%;
 }
 
 .add-form-header {
@@ -114,7 +122,7 @@ thead {
     text-decoration: underline;
 }
 
-form #inline-input {
+form .inline-input {
     display: inline-block;
 }
 

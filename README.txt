@@ -38,6 +38,10 @@ Want to Try it Yourself?
 
 
 Features I'd like to add
+- Fully responsive for screensizes (headers/tables/ect)
+    -tables are repsonsive, but not ideal for mobile, would want to restructure display type for mobile
+- Location data integrate google maps api
+- profle page
 - When registered activity overlaps with existing joined activities, displaying a warning that allows users to manage that conflic
 - Allow users to upvote reviews, so that most relevant or most liked reviews filter to top of list
 
