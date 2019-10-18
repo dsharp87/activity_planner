@@ -23,9 +23,11 @@ namespace activity_planner.Controllers
         [Route("Dashboard")]
         public IActionResult ShowDashboard()
         {
+            //check for logged in
             if (HttpContext.Session.GetInt32("logged_id") == null) {
                 return RedirectToAction("LoginReg", "LoginReg");
             }
+            //grab all activites
             ViewBag.LoggedUser = _context.Users.Include(user => user.AttendingActivities).ThenInclude(ua => ua.Activity).SingleOrDefault(user => (user.UserID == HttpContext.Session.GetInt32("logged_id")));
             ViewBag.AllFutureActivities = _context.Activities.Where(activity => activity.StartTime > DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).OrderBy(activity=> activity.StartTime).ToList();
             ViewBag.PastActivities = _context.Activities.Where(activity => activity.StartTime < DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).Include(activity => activity.Reviews).OrderByDescending(activity=> activity.StartTime).ToList(); 
@@ -36,6 +38,7 @@ namespace activity_planner.Controllers
         [HttpGet]
         [Route("AddActivityForm")]
         public IActionResult AddActivityForm() {
+            //check for logged in
             if (HttpContext.Session.GetInt32("logged_id") == null) {
                 return RedirectToAction("LoginReg", "LoginReg");
             }
@@ -50,6 +53,7 @@ namespace activity_planner.Controllers
             ViewBag.OverlapError = "";
             if(ModelState.IsValid) {
                 int LoggedID = (int)HttpContext.Session.GetInt32("logged_id");
+                //convert the denomination into the appropriate number of minutes to be stored in db
                 TimeSpan ActivityDuration = new TimeSpan(0, 0, 0);
                 if (TimeDenomination == "Days") {
                     ActivityDuration += new TimeSpan(24*NewActivityViewModel.Duration, 0, 0);
@@ -109,6 +113,7 @@ namespace activity_planner.Controllers
         [HttpPost]
         [Route("DeleteActivity")]
         public IActionResult DeleteActivity(int ActivityID) {
+            //find and delete activity by id
             Activity DeleteMe = _context.Activities.SingleOrDefault(activity => activity.ActivityID == ActivityID);
             _context.Activities.Remove(DeleteMe);
             _context.SaveChanges();
@@ -118,6 +123,7 @@ namespace activity_planner.Controllers
         [HttpPost]
         [Route("JoinActivity")]
         public IActionResult JoinActivity(int ActivityID) {
+            //create many to many entry and add to db
             UserActivity NewUserActivity = new UserActivity() {
                 UserID = (int)HttpContext.Session.GetInt32("logged_id"),
                 ActivityID = ActivityID
@@ -130,6 +136,7 @@ namespace activity_planner.Controllers
         [HttpPost]
         [Route("LeaveActivity")]
         public IActionResult LeaveActivity(int ActivityID) {
+            //delete many to many for this user/activity combo
             UserActivity DeleteMe =  _context.UserActivities.SingleOrDefault(ua => ua.UserID == (int)HttpContext.Session.GetInt32("logged_id") && ua.ActivityID == ActivityID);
             _context.UserActivities.Remove(DeleteMe);
             _context.SaveChanges();

@@ -37,6 +37,7 @@ namespace activity_planner.Models
 
     public class CustomPasswordTypeAttribute : ValidationAttribute
     {
+        //this is currently non functional.  Need to approrately search for special character
         public override bool IsValid(object value)
         {
             string password = (string)value;
