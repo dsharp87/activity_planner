@@ -43,6 +43,7 @@
                     <tr>
                         <td><a href="/ShowActivity/@activity.ActivityID">@activity.Name</a></td>
                         <td>@activity.StartTime.ToString("MM/dd hh:mm tt")</td>
+                        <!-- take time in minutes and translate it back to appropriate time lenght display -->
                         @if (@activity.Duration < 60) {
                             <td>@activity.Duration Minutes</td>
                         } else if (@activity.Duration > 59 && @activity.Duration < 1440) {
@@ -50,8 +51,9 @@
                         } else {
                             <td>@(activity.Duration/1440) Days</td>
                         }
-                        <td>@activity.Creator.FirstName</td>
+                        <td>@activity.Creator.FirstName @activity.Creator.LastName</td>
                         <td>@activity.UsersAttending.Count</td>
+                        <!-- //owner can delte activity that hasn't occured yet -->
                         @if (ViewBag.LoggedUser.UserID == activity.Creator.UserID) {
                         <td>
                             <form asp-controller="Activity" asp-action="DeleteActivity" method="POST">
@@ -60,6 +62,7 @@
                             </form>
                         </td>
                         } else {
+                            <!-- search for logged in user among existing guests -->
                             bool NotGoing = true;
                             @foreach (var useractivity in activity.UsersAttending) {
                                 if (@useractivity.UserID == @ViewBag.LoggedUser.UserID) {
@@ -67,6 +70,7 @@
                                 }
                             }
                             if (NotGoing) {
+                                <!-- searh through all activities you have created/join looking for overlapping time lenghts -->
                                 bool overlapflag = false;
                                 @foreach ( var ua in ViewBag.LoggedUser.AttendingActivities) {
                                     DateTime JoinedActivityStart = ua.Activity.StartTime;
@@ -77,6 +81,7 @@
                                         overlapflag = true;
                                     }
                                 }
+                                <!-- can join non overlapping activities -->
                                 if (overlapflag != true) {
                                     <td>
                                             <form asp-controller="Activity" asp-action="JoinActivity" method="POST">
@@ -87,7 +92,9 @@
                                 } else {
                                     <td>You Are Busy During This Time</td>
                                 }
+                            
                             } else {
+                                <!-- can leave joined activities as long as they havn't started yet -->
                                 <td>
                                     <form asp-controller="Activity" asp-action="LeaveActivity" method="POST">
                                         <input type="hidden" value="@activity.ActivityID" name="ActivityID">
@@ -136,9 +143,10 @@
                             } else {
                                 <td>@(activity.Duration/1440) Days</td>
                             }
-                            <td>@activity.Creator.FirstName</td>
+                            <td>@activity.Creator.FirstName @activity.Creator.LastName</td>
                             <td>@activity.UsersAttending.Count</td>
                             
+                            <!-- check to see if you attended this event -->
                             @foreach (var useractivity in activity.UsersAttending) {
                                 if (@useractivity.UserID == @ViewBag.LoggedUser.UserID) {
                                     attendedflag = true;

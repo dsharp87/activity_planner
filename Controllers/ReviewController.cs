@@ -22,6 +22,7 @@ namespace activity_planner.Controllers
         [HttpGet]
         [Route("ReviewForm/{ActivityID}")]
         public IActionResult ReviewForm(int ActivityID) {
+            //check for logged in state
             if (HttpContext.Session.GetInt32("logged_id") == null) {
                 return RedirectToAction("LoginReg", "LoginReg");
             }
@@ -45,6 +46,7 @@ namespace activity_planner.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("ShowReviews", "Review", new {ActivityID = ActivityID});
             }
+            //if validation fails, reload page with same activity
             ViewBag.Activity = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).SingleOrDefault(activity => activity.ActivityID == ActivityID);
             return View("ReviewForm");
         }
@@ -52,9 +54,11 @@ namespace activity_planner.Controllers
         [HttpGet]
         [Route("ShowReviews/{ActivityID}")]
         public IActionResult ShowReviews(int ActivityID) {
+            //check for logged in state
             if (HttpContext.Session.GetInt32("logged_id") == null) {
                 return RedirectToAction("LoginReg", "LoginReg");
             }
+            //grab user and activity for front end
             ViewBag.LoggedUserID = (int)HttpContext.Session.GetInt32("logged_id");
             ViewBag.Activity = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).Include(activity => activity.Reviews).ThenInclude(review => review.Reviewer).SingleOrDefault(activity => activity.ActivityID == ActivityID);
             return View("ShowReviews");

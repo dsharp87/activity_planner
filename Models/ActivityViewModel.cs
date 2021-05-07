@@ -26,6 +26,7 @@ namespace activity_planner.Models
 
     }
 
+    //custom validation attribute that makes sure you are stargin the activity in the future
     public class FutureDateAttribute : ValidationAttribute
     {
         public override bool IsValid(object value)

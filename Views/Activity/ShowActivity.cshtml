@@ -35,6 +35,7 @@
                     <div class="col">
                         <h5> Your Attending Status: Creator/Attending</h5>
                         <h5 class="show-page-inline">Actions: </h5>
+                        <!-- if you are created, you can delte this activity -->
                         <form class="show-page-inline" asp-controller="Activity" asp-action="DeleteActivity" method="POST">
                             <input type="hidden" value="@ViewBag.Activity.ActivityID" name="ActivityID">
                             <input type="submit" value="Delete" class="btn btn-danger">
@@ -48,6 +49,7 @@
                         NotGoing = false;
                     }
                 }
+                <!-- can join or leave based on current attending status -->
                 if (NotGoing) {
                     <div class="row">
                         <div class="col">

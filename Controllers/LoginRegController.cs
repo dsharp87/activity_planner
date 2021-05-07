@@ -41,11 +41,13 @@ namespace activity_planner.Controllers
                     Email = FormUser.Email,
                     Password = FormUser.Password
                 };
+                //chceck for existingt email, error if so
                 User emailExistsQuery = _context.Users.SingleOrDefault(user => (user.Email == FormUser.Email));
                 if(emailExistsQuery != null) {
                     ViewBag.ExistsError = "User with this email already exists, please choose a different email";
                     return View("LoginReg");
                 } else {
+                    //create new user, hash password, load into db
                     PasswordHasher<User> Hasher = new PasswordHasher<User>();
                     NewUser.Password = Hasher.HashPassword(NewUser, NewUser.Password);
                     _context.Add(NewUser);
@@ -65,16 +67,19 @@ namespace activity_planner.Controllers
             User results = _context.Users.SingleOrDefault(user => (user.Email == email));
             if (results != null) {
                 PasswordHasher<User> Hasher = new PasswordHasher<User>();
+                //successful login should go to dashboard
                 if(Hasher.VerifyHashedPassword(results, results.Password, password) != 0) {
                     int id = results.UserID;
                     HttpContext.Session.SetInt32("logged_id", id);
                     return RedirectToAction("ShowDashboard", "Activity");
                 } else {
+                    //do not tell user what is wrong for security purposes
                     TempData["error"] = "login information inccorrect. Please try again.";
                     return RedirectToAction("LoginReg");
                 }
                
             }
+            //didn't find the user, return same error
             TempData["error"] = "login information inccorrect. Please try again.";
             return RedirectToAction("LoginReg");
         }
