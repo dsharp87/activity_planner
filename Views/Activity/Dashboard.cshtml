@@ -51,7 +51,7 @@
                         } else {
                             <td>@(activity.Duration/1440) Days</td>
                         }
-                        <td>@activity.Creator.FirstName</td>
+                        <td>@activity.Creator.FirstName @activity.Creator.LastName</td>
                         <td>@activity.UsersAttending.Count</td>
                         <!-- //owner can delte activity that hasn't occured yet -->
                         @if (ViewBag.LoggedUser.UserID == activity.Creator.UserID) {
@@ -143,7 +143,7 @@
                             } else {
                                 <td>@(activity.Duration/1440) Days</td>
                             }
-                            <td>@activity.Creator.FirstName</td>
+                            <td>@activity.Creator.FirstName @activity.Creator.LastName</td>
                             <td>@activity.UsersAttending.Count</td>
                             
                             <!-- check to see if you attended this event -->

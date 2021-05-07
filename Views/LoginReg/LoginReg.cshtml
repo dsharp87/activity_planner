@@ -26,8 +26,20 @@
                         <input asp-for="Email" class="form-control"/>
                         <p class="text-danger">@ViewBag.ExistsError</p>
                         <span asp-validation-for="Email" class="text-danger"></span><br>
-                        <label asp-for="Password"></label>
-                        <input asp-for="Password" class="form-control" type="password"/>
+                        <label asp-for="Password">Password <img class="questionMarkIcon" src="~/images/QuestionMarkIcon.png" alt="question mark icon"></label>   
+                        <div class="passwordInfoPopup">
+                            <span class="passwordInfoPopupText">
+                                <p>A valid password:</p>
+                                <ul>
+                                    <li class="charCountRequirement">is a minimum of 8 characters</li>
+                                    <li class="upperCaseRequirement">has at least one upper case letter</li>
+                                    <li class="numberRequirement">has least one number</li>
+                                    <li class="specialCharacterRequirement">has at least one of the following special characters: ~`!@@#$%^&*()_-+={[}]|\:;"'<,>.?/</li>
+                                    <li class="noSpacesRequirement">contains no spaces</li>
+                                </ul>
+                            </span>
+                        </div>
+                        <input asp-for="Password" class="form-control passwordInput" type="password"/>
                         <span asp-validation-for="Password" class="text-danger"></span><br>
                         <label asp-for="PasswordConfirmation"></label>
                         <input asp-for="PasswordConfirmation" class="form-control" type="password"/>

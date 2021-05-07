@@ -37,6 +37,14 @@ textarea {
     }
 }
 
+.darkred {
+    color: darkred;
+}
+
+.green {
+    color: green;
+}
+
 /* *******LOGIN REG START ******** */
 .top-bar {
     height: 110px;
@@ -61,6 +69,37 @@ textarea {
 
 .form-container-left {
     border-right: solid lightgrey 3px;
+}
+
+.questionMarkIcon {
+    width: 20px;
+    vertical-align: center;
+}
+
+.passwordInfoPopup {
+    
+
+    display: inline-block;
+    position: relative;
+    
+}
+
+.passwordInfoPopup .passwordInfoPopupText 
+{
+    width: 300px;
+    border: 2px solid black;
+    background:#FFFFFF;
+    padding: 5px;
+    border-radius: 10px;
+    visibility: hidden;
+    z-index: 1;
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+}
+
+.passwordInfoPopup .show{
+    visibility: visible;
 }
 
 /* *******LOGIN REG END ******** */
