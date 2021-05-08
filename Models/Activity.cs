@@ -21,8 +21,19 @@ namespace activity_planner.Models
 
         public DateTime StartTime { get; set; }
 
+        //this will get added and updated at later point
+        // public DateTime EndTime { get; set; }
+
         //This is in Minutes
         public int Duration { get; set; }
+
+        public string StreetAddress {get; set; }
+
+        public string City { get; set; }
+
+        public string State { get; set; }
+
+        public string Zip { get; set; }
 
         public string Description { get;  set; }
 
@@ -33,6 +44,7 @@ namespace activity_planner.Models
         public List<UserActivity> UsersAttending { get; set;}
 
         public List<Review> Reviews { get; set;}
+
 
 
         public Activity() {

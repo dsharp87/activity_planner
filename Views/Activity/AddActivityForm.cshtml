@@ -38,7 +38,7 @@
                 <input type="date" asp-for="StartDate" class="form-control"/><br>
         </div>
         <div class="col-sm-4">
-                <label>Start Time</label>
+                <label>Start Time:</label>
                 <input type="time" name="StartTime" class="form-control"/><br>
         </div>
         <div class="col-sm-2">
@@ -54,6 +54,39 @@
                 </select><br>
         </div>
     </div>
+
+    <div class="row address-rowParent">
+        <div class="col-sm-6 address-col">
+            <div class="streetRow">
+                <label asp-for="StreetAddress"></label>
+                <input asp-for="StreetAddress" class="form-control streetInput" data-changed-flag="false" data-current-value=""/>
+            </div>
+            <div class="cityStateRow">
+                <label asp-for="City"></label>
+                <input asp-for="City" class="form-control cityInput" data-changed-flag="false" data-current-value/>
+                <label asp-for="State"></label>
+                <select asp-for="State" class="form-control stateInput" data-changed-flag="false" data-current-value>
+                    @activity_planner.Models.ActivityViewModel.GetStates()
+                </select>
+            </div>
+            <div class="zipRow">
+                <label asp-for="Zip"></label>
+                <input asp-for="Zip" class="form-control zipInput" data-changed-flag="false" data-current-value/>
+            </div>
+        </div>
+        <div class="col-sm-6 map-col">
+            <iframe
+                id="createMapIframe"
+                width="450"
+                height="250"
+                frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC95F71hOI6L7Zp8n-6r1Jg3fYK36RrLQo&q=14054+17th+Ave+NE,+Seattle,+WA+98125"
+            >
+            </iframe>
+        </div>
+        
+    </div>
+
     <div class="row">
         <div class="col">
                 <label>Description:</label>
@@ -64,6 +97,6 @@
             </form>
             <h3>@ViewBag.OverlapError</h3>
             <div asp-validation-summary="All"></div>
-        </div>
     </div>
+    
 </div>

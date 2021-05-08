@@ -24,6 +24,7 @@ namespace activity_planner.Controllers
         public IActionResult ShowDashboard()
         {
             //check for logged in
+            int? loggedId = HttpContext.Session.GetInt32("logged_id");
             if (HttpContext.Session.GetInt32("logged_id") == null) {
                 return RedirectToAction("LoginReg", "LoginReg");
             }
@@ -66,6 +67,10 @@ namespace activity_planner.Controllers
                 Activity NewActivity = new Activity() {
                     Name = NewActivityViewModel.Name,
                     Description = NewActivityViewModel.Description,
+                    StreetAddress = NewActivityViewModel.StreetAddress,
+                    City = NewActivityViewModel.City,
+                    State = NewActivityViewModel.State,
+                    Zip = NewActivityViewModel.Zip,
                     CreatorID = LoggedID,
                     Duration = (int)ActivityDuration.TotalMinutes,
                     StartTime = NewActivityViewModel.StartDate + StartTime
