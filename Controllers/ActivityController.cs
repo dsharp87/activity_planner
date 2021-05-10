@@ -70,7 +70,7 @@ namespace activity_planner.Controllers
                     StreetAddress = NewActivityViewModel.StreetAddress,
                     City = NewActivityViewModel.City,
                     State = NewActivityViewModel.State,
-                    Zip = NewActivityViewModel.Zip,
+                    ZipCode = NewActivityViewModel.ZipCode,
                     CreatorID = LoggedID,
                     Duration = (int)ActivityDuration.TotalMinutes,
                     StartTime = NewActivityViewModel.StartDate + StartTime
@@ -161,9 +161,11 @@ namespace activity_planner.Controllers
             // will need to check if something is in overlapp session.  If so grab it and put it in viewbag., then clear that particular session value OR set it to null?
 
             //   *************
+            Activity a = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).SingleOrDefault(activity => activity.ActivityID == ActivityID);
+            ActivityViewModel viewModel = ActivityViewModel.GetActivityViewModel(a);
             ViewBag.LoggedUser = _context.Users.Include(user => user.AttendingActivities).ThenInclude(ua => ua.Activity).SingleOrDefault(user => (user.UserID == HttpContext.Session.GetInt32("logged_id")));
-            ViewBag.Activity = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).SingleOrDefault(activity => activity.ActivityID == ActivityID);
-            return View("ShowActivity");
+            ViewBag.Activity = a;
+            return View("ShowActivity", viewModel);
         }
 
         [HttpPost]
@@ -172,6 +174,8 @@ namespace activity_planner.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("LoginReg", "LoginReg");
         }
+
+        
 
     }
 }

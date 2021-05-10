@@ -123,19 +123,19 @@ function refreshActivityCreationMap()
     var street = $(".streetInput").val();
     var city = $(".cityInput").val();
     var state = $(".stateInput").val();
-    var zip = $(".zipInput").val();
+    var zipCode = $(".zipCodeInput").val();
 
     //don't trigger refresh if nothing has changed
     if($(".streetInput").attr("data-changed-flag") == "false" &&
         $(".cityInput").attr("data-changed-flag") == "false" &&
         $(".stateInput").attr("data-changed-flag") == "false" &&
-        $(".zipInput").attr("data-changed-flag") == "false")
+        $(".zipCodeInput").attr("data-changed-flag") == "false")
     {
         return;
     }
 
     //set up formatting
-    var addressVals = [street, city, state, zip];    
+    var addressVals = [street, city, state, zipCode];    
     var formatedVals = [];
 
     //format non empty fields

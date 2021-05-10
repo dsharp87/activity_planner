@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="~/css/site.css" />
+@model activity_planner.Models.ActivityViewModel
 
 <div class="container">
     <div class="row">
@@ -20,16 +21,27 @@
     <div class="row">
         <div class="col">
             <h4>Event Coordinator: @ViewBag.Activity.Creator.FirstName @ViewBag.Activity.Creator.LastName</h4>
-            <h4>Event Date: @ViewBag.Activity.StartTime.ToString("MM/dd/yy")</h4>
+            <h4>Event Date: @Model.GetlocalDateTimeString()</h4>
+            <h4>Location: @ViewBag.Activity.StreetAddress, @ViewBag.Activity.City, @ViewBag.Activity.State @ViewBag.Activity.ZipCode</h4>
             <h4>Description:</h4>
             <p>@ViewBag.Activity.Description</p>
             <h4>People that attended:</h4>
             <ul>
                 @foreach(var user in @ViewBag.Activity.UsersAttending) {
-                    <li>@user.User.FirstName</li>
+                    <li>@user.User.FirstName @user.User.LastName</li>
                 }
             </ul>
             <hr>
+        </div>
+        <div class="col">
+            <iframe
+            id="showActivityIframe"
+            width="450"
+            height="250"
+            frameborder="0" style="border:0"
+            src="@Model.GetMapSrcString()"
+            >
+            </iframe>
         </div>
     </div>
 

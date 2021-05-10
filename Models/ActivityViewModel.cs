@@ -35,7 +35,7 @@ namespace activity_planner.Models
 
         [Required(ErrorMessage="A Zip Code is required")]
         [Display(Name = "Zip Code")]
-        public string Zip { get; set; }
+        public string ZipCode { get; set; }
 
         [Required]
         [MinLength(10)]
@@ -58,7 +58,54 @@ namespace activity_planner.Models
             }
             HtmlString options = new HtmlString(stringVals);
             return options;
-        } 
+        }
+
+        public string GetMapSrcString()
+        {
+            string[] vals = new string[] {StreetAddress, City, State, ZipCode};
+
+            for(int i=0; i < vals.Length; i++)
+            {
+                vals[i] = StreetAddress.Replace(' ', '+');
+            }
+
+            string srcString="https://www.google.com/maps/embed/v1/place?key=AIzaSyC95F71hOI6L7Zp8n-6r1Jg3fYK36RrLQo&q=";
+            for(var i = 0; i < vals.Length; i++)
+            {
+                string subString = "";
+                if(i != 0)
+                {
+                    subString+= ",+";
+                }
+                subString+= vals[i];
+                srcString += subString;
+            }
+
+            return srcString;
+
+        }
+
+        public static ActivityViewModel GetActivityViewModel(Activity a)
+        {
+            ActivityViewModel viewModel = new ActivityViewModel()
+            {
+                Name = a.Name,
+                StartDate = a.StartTime,
+                Duration = a.Duration,
+                StreetAddress = a.StreetAddress,
+                City = a.City,
+                State = a.State,
+                ZipCode = a.ZipCode,
+                Description = a.Description
+            };
+            return viewModel;
+        }
+
+        public string GetlocalDateTimeString()
+        {
+            string abbreviation = TimeZoneAbbreviator.Convertion(TimeZoneInfo.Local);
+            return StartDate.ToLocalTime().ToString("MM/dd/yy h:mmtt") + " " + abbreviation;
+        }
 
     }
 
@@ -75,6 +122,8 @@ namespace activity_planner.Models
             // return value != null && (DateTime)value > DateTime.Now;
         }
     }
+
+
 
 
 }

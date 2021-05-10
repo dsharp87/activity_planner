@@ -33,7 +33,7 @@ namespace activity_planner.Models
 
         public string State { get; set; }
 
-        public string Zip { get; set; }
+        public string ZipCode { get; set; }
 
         public string Description { get;  set; }
 

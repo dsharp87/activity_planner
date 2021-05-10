@@ -27,7 +27,11 @@ namespace activity_planner.Controllers
                 return RedirectToAction("LoginReg", "LoginReg");
             }
             ViewBag.LoggedUser = _context.Users.Include(user => user.AttendingActivities).ThenInclude(ua => ua.Activity).SingleOrDefault(user => (user.UserID == HttpContext.Session.GetInt32("logged_id")));
-            ViewBag.Activity = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).SingleOrDefault(activity => activity.ActivityID == ActivityID);
+            Activity a = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).SingleOrDefault(activity => activity.ActivityID == ActivityID);
+            ViewBag.Activity = a;
+            ActivityViewModel viewModel = ActivityViewModel.GetActivityViewModel(a);
+            ViewBag.FormattedDateSting = viewModel.GetlocalDateTimeString();
+            ViewBag.MapSource = viewModel.GetMapSrcString();
             return View("ReviewForm");
         }
 
@@ -60,8 +64,10 @@ namespace activity_planner.Controllers
             }
             //grab user and activity for front end
             ViewBag.LoggedUserID = (int)HttpContext.Session.GetInt32("logged_id");
-            ViewBag.Activity = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).Include(activity => activity.Reviews).ThenInclude(review => review.Reviewer).SingleOrDefault(activity => activity.ActivityID == ActivityID);
-            return View("ShowReviews");
+            Activity a = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).Include(activity => activity.Reviews).ThenInclude(review => review.Reviewer).SingleOrDefault(activity => activity.ActivityID == ActivityID);
+            ViewBag.Activity = a;
+            ActivityViewModel viewModel = ActivityViewModel.GetActivityViewModel(a);
+            return View("ShowReviews", viewModel);
         }
 
     }
