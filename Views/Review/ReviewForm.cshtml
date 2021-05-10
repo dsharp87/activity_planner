@@ -13,7 +13,17 @@
     <div class="row">
         <div class="col">
                 <h2 class="review-form-activity-title">@ViewBag.Activity.Name</h2>
-                <h4>Event Coordinator: @ViewBag.Activity.Creator.FirstName</h4>
+                <h4>Event Coordinator: @ViewBag.Activity.Creator.FirstName @ViewBag.Activity.Creator.LastName</h4>
+                <h4>Event Date: @ViewBag.FormattedDateSting</h4>
+                <h4>Location: @ViewBag.Activity.StreetAddress, @ViewBag.Activity.City, @ViewBag.Activity.State @ViewBag.Activity.ZipCode</h4>
+                <iframe
+                    id="ReviewFormIframe"
+                    width="450"
+                    height="250"
+                    frameborder="0" style="border:0"
+                    src="@ViewBag.MapSource"
+                    >
+                </iframe>
                 <h4>Description:</h4>
                 <p>@ViewBag.Activity.Description</p>
                 <h4>Participants:</h4>

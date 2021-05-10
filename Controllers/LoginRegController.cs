@@ -84,6 +84,14 @@ namespace activity_planner.Controllers
             return RedirectToAction("LoginReg");
         }
 
+        [HttpPost]
+        [Route("autolog")]
+        public IActionResult AutoLog()
+        {
+            HttpContext.Session.SetInt32("logged_id", 10);
+            return RedirectToAction("ShowDashboard", "Activity");
+        }
+
         public IActionResult Error()
         {
             return View();

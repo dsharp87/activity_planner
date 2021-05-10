@@ -1,3 +1,4 @@
+@model activity_planner.Models.ActivityViewModel
 <link rel="stylesheet" href="~/css/site.css" />
 
 <div class="container">
@@ -20,12 +21,14 @@
     <div class="row">
         <div class="col">
             <h4>Event Coordinator: @ViewBag.Activity.Creator.FirstName @ViewBag.Activity.Creator.LastName</h4>
+            <h4>Event Date: @Model.GetlocalDateTimeString()</h4>
+            <h4>Location: @ViewBag.Activity.StreetAddress, @ViewBag.Activity.City, @ViewBag.Activity.State @ViewBag.Activity.ZipCode</h4>
             <h4>Description:</h4>
             <p>@ViewBag.Activity.Description</p>
             <h4>Currently Attending:</h4>
             <ul>
                 @foreach(var user in @ViewBag.Activity.UsersAttending) {
-                    <li>@user.User.FirstName</li>
+                    <li>@user.User.FirstName @user.User.LastName</li>
                 }
             </ul>
         </div>
@@ -74,6 +77,14 @@
                     </div>
                 }
             }
+            <iframe
+                id="showActivityIframe"
+                width="450"
+                height="250"
+                frameborder="0" style="border:0"
+                src="@Model.GetMapSrcString()"
+            >
+            </iframe>
         </div>
     </div>  
 </div>

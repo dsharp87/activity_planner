@@ -31,7 +31,7 @@
                 <thead class="thead-light">
                     <tr>
                         <td>Activity</td>
-                        <td>Date and Time</td>
+                        <td>Start Date and Time</td>
                         <td>Duration</td>
                         <td>Event Coordinator</td>
                         <td>Number of Participants</td>
@@ -121,7 +121,7 @@
                 <thead class="thead-light">
                     <tr>
                         <td>Activity</td>
-                        <td>Date and Time</td>
+                        <td>Start Date and Time</td>
                         <td>Duration</td>
                         <td>Event Coordinator</td>
                         <td>Number of Participants</td>
@@ -134,7 +134,7 @@
                     @foreach (var activity in ViewBag.PastActivities) {
                         bool attendedflag = false;
                         <tr>
-                            <td><a href="/ShowActivity/@activity.ActivityID">@activity.Name</a></td>
+                            <td><a href="ShowReviews/@activity.ActivityID">@activity.Name</a></td>
                             <td>@activity.StartTime.ToString("MM/dd hh:mm tt")</td>
                             @if (@activity.Duration < 60) {
                                 <td>@activity.Duration Minutes</td>
