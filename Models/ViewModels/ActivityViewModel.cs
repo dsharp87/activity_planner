@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using activity_planner.UtilityClasses;
 using Microsoft.AspNetCore.Html;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace activity_planner.Models
