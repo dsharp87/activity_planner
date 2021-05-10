@@ -30,7 +30,7 @@ namespace activity_planner.Controllers
             Activity a = _context.Activities.Include(activity => activity.Creator).Include(activity => activity.UsersAttending).ThenInclude(ua => ua.User).SingleOrDefault(activity => activity.ActivityID == ActivityID);
             ViewBag.Activity = a;
             ActivityViewModel viewModel = ActivityViewModel.GetActivityViewModel(a);
-            ViewBag.FormattedDateSting = viewModel.GetlocalDateTimeString();
+            ViewBag.FormattedDateSting = viewModel.GetlocalStartDateTimeStringFormatted();
             ViewBag.MapSource = viewModel.GetMapSrcString();
             return View("ReviewForm");
         }

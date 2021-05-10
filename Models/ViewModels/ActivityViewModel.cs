@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using activity_planner.UtilityClasses;
 using Microsoft.AspNetCore.Html;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ namespace activity_planner.Models
 {
     public class ActivityViewModel: BaseEntity
     {
+        public int ActivityID {get; set;}
         
         [Required]
         [MinLength(2)]
@@ -40,6 +42,12 @@ namespace activity_planner.Models
         [Required]
         [MinLength(10)]
         public string Description { get;  set; }
+
+        public User Creator { get; set; }
+
+        public List<UserActivity> UsersAttending { get; set;}
+
+        public List<Review> Reviews { get; set;}
 
         public static HtmlString GetStates()
         {
@@ -89,6 +97,7 @@ namespace activity_planner.Models
         {
             ActivityViewModel viewModel = new ActivityViewModel()
             {
+                ActivityID = a.ActivityID,
                 Name = a.Name,
                 StartDate = a.StartTime,
                 Duration = a.Duration,
@@ -96,15 +105,78 @@ namespace activity_planner.Models
                 City = a.City,
                 State = a.State,
                 ZipCode = a.ZipCode,
-                Description = a.Description
+                Description = a.Description,
+                Creator = a.Creator,
+                UsersAttending = a.UsersAttending,
+                Reviews = a.Reviews,
             };
             return viewModel;
         }
 
-        public string GetlocalDateTimeString()
+        public string GetlocalStartDateTimeStringFormatted()
         {
             string abbreviation = TimeZoneAbbreviator.Convertion(TimeZoneInfo.Local);
             return StartDate.ToLocalTime().ToString("MM/dd/yy h:mmtt") + " " + abbreviation;
+        }
+
+        public string GetDurationString()
+        {
+            string formatedDuration = "";
+            if(Duration == 1)
+            {
+                formatedDuration += Duration + " Minute";
+            }
+            else if(Duration > 1 && Duration <= 59)
+            {
+                formatedDuration += Duration + " Minutes";
+            }
+            else if(Duration == 60)
+            {
+                formatedDuration += Duration/60 + " Hour";
+            }
+            else if(Duration > 60 && Duration < 1440)
+            {
+                formatedDuration += Duration/60 + " Hours";
+            }
+            else if(Duration == 1440)
+            {
+                formatedDuration += Duration/1440 + " Day";
+            }
+            else
+            {
+                formatedDuration += Duration/1440 + " Days";
+                
+            }
+            return formatedDuration;
+        }
+
+        public bool UserIsAttending(int userID)
+        {
+            foreach(UserActivity ua in UsersAttending)
+            {
+                if (ua.UserID == userID)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        //search through all activities you have created/joined looking for overlapping time lengths
+        public bool UserHasTimeOverlap(User loggedUser)
+        {
+            foreach(UserActivity ua in loggedUser.AttendingActivities)
+            {
+                DateTime JoinedActivityStart = ua.Activity.StartTime;
+                DateTime JoinedActivityEnd = ua.Activity.StartTime + new TimeSpan(0, ua.Activity.Duration, 0);
+                DateTime ThisActivityStart = StartDate;
+                DateTime ThisActivityEnd = StartDate + new TimeSpan(0, Duration, 0);
+                if(JoinedActivityStart > ThisActivityStart && JoinedActivityStart < ThisActivityEnd || ThisActivityStart > JoinedActivityStart && ThisActivityStart < JoinedActivityEnd)
+                {
+                   return true;
+                }
+            }
+            return false;
         }
 
     }

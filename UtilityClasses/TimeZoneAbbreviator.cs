@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace activity_planner.Models
+namespace activity_planner.UtilityClasses
 {
 
     public static class TimeZoneAbbreviator

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using activity_planner.Models;
@@ -29,10 +28,17 @@ namespace activity_planner.Controllers
                 return RedirectToAction("LoginReg", "LoginReg");
             }
             //grab all activites
-            ViewBag.LoggedUser = _context.Users.Include(user => user.AttendingActivities).ThenInclude(ua => ua.Activity).SingleOrDefault(user => (user.UserID == HttpContext.Session.GetInt32("logged_id")));
-            ViewBag.AllFutureActivities = _context.Activities.Where(activity => activity.StartTime > DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).OrderBy(activity=> activity.StartTime).ToList();
-            ViewBag.PastActivities = _context.Activities.Where(activity => activity.StartTime < DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).Include(activity => activity.Reviews).OrderByDescending(activity=> activity.StartTime).ToList(); 
-            return View("Dashboard");
+            List<Activity> upcomingActvities = _context.Activities.Where(activity => activity.StartTime > DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).OrderBy(activity=> activity.StartTime).ToList();
+            List<Activity> expiredActivities = _context.Activities.Where(activity => activity.StartTime < DateTime.Now).Include(activity => activity.UsersAttending).Include(activity => activity.Creator).Include(activity => activity.Reviews).OrderByDescending(activity=> activity.StartTime).ToList();
+            
+            //generate view model
+            DashboardViewModel viewModel = new DashboardViewModel()
+            {
+                FutureActivities = DashboardViewModel.GetActivityViewModels(upcomingActvities),
+                PastActivities = DashboardViewModel.GetActivityViewModels(expiredActivities),
+                LoggedUser = _context.Users.Include(user => user.AttendingActivities).ThenInclude(ua => ua.Activity).SingleOrDefault(user => (user.UserID == HttpContext.Session.GetInt32("logged_id")))
+            };
+            return View("Dashboard", viewModel);
         }
 
 

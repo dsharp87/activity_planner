@@ -1,9 +1,10 @@
+@model activity_planner.Models.DashboardViewModel
 <link rel="stylesheet" href="~/css/site.css" />
 
 <div class="container">
     <div class=" row top-bar-dashboard">
         <div class="col">
-            <h4>Welcome: @ViewBag.LoggedUser.FirstName @ViewBag.LoggedUser.LastName</h4>
+            <h4>Welcome: @Model.LoggedUser.FirstName @Model.LoggedUser.LastName</h4>
             <form asp-controller="Activity" asp-action="Logout" method="POST" class="btn logout-button">
                     <input type="submit" value="Logout" class="btn btn-danger">
             </form>
@@ -39,22 +40,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var activity in ViewBag.AllFutureActivities) {
+                    @foreach (var activity in Model.FutureActivities) {
                     <tr>
                         <td><a href="/ShowActivity/@activity.ActivityID">@activity.Name</a></td>
-                        <td>@activity.StartTime.ToString("MM/dd hh:mm tt")</td>
-                        <!-- take time in minutes and translate it back to appropriate time lenght display -->
-                        @if (@activity.Duration < 60) {
-                            <td>@activity.Duration Minutes</td>
-                        } else if (@activity.Duration > 59 && @activity.Duration < 1440) {
-                            <td>@(activity.Duration/60) Hours</td>
-                        } else {
-                            <td>@(activity.Duration/1440) Days</td>
-                        }
+                        <td>@activity.GetlocalStartDateTimeStringFormatted()</td>
+                        <!-- take Date in minutes and translate it back to appropriate time lenght display -->
+                        <td>@activity.GetDurationString()</td>
                         <td>@activity.Creator.FirstName @activity.Creator.LastName</td>
                         <td>@activity.UsersAttending.Count</td>
                         <!-- //owner can delte activity that hasn't occured yet -->
-                        @if (ViewBag.LoggedUser.UserID == activity.Creator.UserID) {
+                        @if(Model.LoggedUserIsActivityCreator(activity)) {
                         <td>
                             <form asp-controller="Activity" asp-action="DeleteActivity" method="POST">
                                 <input type="hidden" value="@activity.ActivityID" name="ActivityID">
@@ -63,34 +58,23 @@
                         </td>
                         } else {
                             <!-- search for logged in user among existing guests -->
-                            bool NotGoing = true;
-                            @foreach (var useractivity in activity.UsersAttending) {
-                                if (@useractivity.UserID == @ViewBag.LoggedUser.UserID) {
-                                    NotGoing = false;
-                                }
-                            }
-                            if (NotGoing) {
-                                <!-- searh through all activities you have created/join looking for overlapping time lenghts -->
-                                bool overlapflag = false;
-                                @foreach ( var ua in ViewBag.LoggedUser.AttendingActivities) {
-                                    DateTime JoinedActivityStart = ua.Activity.StartTime;
-                                    DateTime JoinedActivityEnd = ua.Activity.StartTime + new TimeSpan(0, ua.Activity.Duration, 0);
-                                    DateTime ThisActivityStart = activity.StartTime;
-                                    DateTime ThisActivityEnd = activity.StartTime + new TimeSpan(0, activity.Duration, 0);
-                                    if(JoinedActivityStart < ThisActivityEnd && ThisActivityStart < JoinedActivityEnd) {
-                                        overlapflag = true;
-                                    }
-                                }
+                            if (!activity.UserIsAttending(Model.LoggedUser.UserID)) {
+                                
+
                                 <!-- can join non overlapping activities -->
-                                if (overlapflag != true) {
+                                if (activity.UserHasTimeOverlap(Model.LoggedUser))
+                                {
+                                    <td>You are already attending an activity during this time</td>
+                                } 
+                                else 
+                                {
                                     <td>
-                                            <form asp-controller="Activity" asp-action="JoinActivity" method="POST">
-                                                <input type="hidden" value="@activity.ActivityID" name="ActivityID">
-                                                <input type="submit" value="Join" class="btn btn-success">
-                                            </form>
+                                        <form asp-controller="Activity" asp-action="JoinActivity" method="POST">
+                                            <input type="hidden" value="@activity.ActivityID" name="ActivityID">
+                                            <input type="submit" value="Join" class="btn btn-success">
+                                        </form>
                                     </td>
-                                } else {
-                                    <td>You Are Busy During This Time</td>
+                                    
                                 }
                             
                             } else {
@@ -131,28 +115,16 @@
                     </tr>
                 </thead>
                 <tbody>   
-                    @foreach (var activity in ViewBag.PastActivities) {
-                        bool attendedflag = false;
+                    @foreach (var activity in Model.PastActivities) {
                         <tr>
                             <td><a href="ShowReviews/@activity.ActivityID">@activity.Name</a></td>
-                            <td>@activity.StartTime.ToString("MM/dd hh:mm tt")</td>
-                            @if (@activity.Duration < 60) {
-                                <td>@activity.Duration Minutes</td>
-                            } else if (@activity.Duration > 59 && @activity.Duration < 1440) {
-                                <td>@(activity.Duration/60) Hours</td>
-                            } else {
-                                <td>@(activity.Duration/1440) Days</td>
-                            }
+                            <td>@activity.GetlocalStartDateTimeStringFormatted()</td>
+                            <td>@activity.GetDurationString()</td>
                             <td>@activity.Creator.FirstName @activity.Creator.LastName</td>
                             <td>@activity.UsersAttending.Count</td>
                             
                             <!-- check to see if you attended this event -->
-                            @foreach (var useractivity in activity.UsersAttending) {
-                                if (@useractivity.UserID == @ViewBag.LoggedUser.UserID) {
-                                    attendedflag = true;
-                                }
-                            }
-                            @if (attendedflag == true) {
+                            @if(activity.UserIsAttending(Model.LoggedUser.UserID)) {
                                 <td>Yes</td>
                                 <td>@activity.Reviews.Count</td>
                                 <td><a href="ReviewForm/@activity.ActivityID">Add Review</a> | <a href="ShowReviews/@activity.ActivityID">View Reviews</a></td>

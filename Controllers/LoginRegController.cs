@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using activity_planner.Models;
 using Microsoft.AspNetCore.Http;
-using System.Text;
 using Microsoft.AspNetCore.Identity;
 
 namespace activity_planner.Controllers
